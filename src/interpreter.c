@@ -1,52 +1,52 @@
 #include "interpreter.h"
 
 char *code;
-char buffer[STCK_SIZE] = {0};
+char tape[STCK_SIZE] = {0};
 
-int buffer_position = 0;
+int tape_position = 0;
 int pointer = 0;
 
 int bf__exec_instruction(char instruction_i){
     switch (instruction_i) {
             case '+':
-                if (buffer[buffer_position] == CHAR_LIMIT)
-                    buffer[buffer_position] = 0;
+                if (tape[tape_position] == CHAR_LIMIT)
+                    tape[tape_position] = 0;
                 else
-                    buffer[buffer_position]++;
+                    tape[tape_position]++;
                 break;
             
             case '-':
-                if (buffer[buffer_position] == 0)
-                    buffer[buffer_position] = CHAR_LIMIT;
+                if (tape[tape_position] == 0)
+                    tape[tape_position] = CHAR_LIMIT;
                 else
-                    buffer[buffer_position]--;
+                    tape[tape_position]--;
                 break;
             
             case '>':
-                if (buffer_position == STCK_SIZE)
-                    buffer_position = 0;
+                if (tape_position == STCK_SIZE)
+                    tape_position = 0;
                 else
-                    buffer_position++;
+                    tape_position++;
                 break;
             
             case '<':
-                if (buffer_position == 0)
-                    buffer_position = STCK_SIZE;
+                if (tape_position == 0)
+                    tape_position = STCK_SIZE;
                 else
-                    buffer_position--;
+                    tape_position--;
                 break;
                 
             case '.':
-                printf("%c", buffer[buffer_position]);
+                printf("%c", tape[tape_position]);
                 break;
 
             case '[':
                 pointer++;
-                bf__conditional_loop(buffer_position, pointer);
+                bf__conditional_loop(tape_position, pointer);
                 break;
 
             case ',':
-                buffer[buffer_position] = getchar();
+                tape[tape_position] = getchar();
                 break;
 
             default:
@@ -54,7 +54,7 @@ int bf__exec_instruction(char instruction_i){
     }
 }
 
-void bf__conditional_loop(int expr_buffer_position, int jump){
+void bf__conditional_loop(int expr_tape_position, int jump){
     char instruction;
     
     while (code[pointer] != -1)
@@ -63,7 +63,7 @@ void bf__conditional_loop(int expr_buffer_position, int jump){
         bf__exec_instruction(instruction);
 
         if (instruction == ']'){
-            if (buffer[expr_buffer_position] == 0){
+            if (tape[expr_tape_position] == 0){
                 pointer++;
                 break;
             } else {
@@ -76,7 +76,7 @@ void bf__conditional_loop(int expr_buffer_position, int jump){
     
 }
 
-void bf__main_loop(char* text){
+char* bf__main_loop(char* text){
     char instruction;
     code = text;
 
@@ -86,5 +86,5 @@ void bf__main_loop(char* text){
 
         pointer++;
     }
-    
+    return tape;
 }
