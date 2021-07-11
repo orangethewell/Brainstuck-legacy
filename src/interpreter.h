@@ -6,4 +6,4 @@
 
 int bf__exec_instruction(char instruction_i);
 void bf__conditional_loop(int expr_buffer_position, int jump);
-void bf__main_loop(char* code);
+char *bf__main_loop(char* code);
