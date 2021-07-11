@@ -5,5 +5,5 @@ This is just another brainfuck interpreter implemented in C. But will be somethi
 Just compile an executable in your PC with `make` and execute your brainfuck code with:
 
 ```
-brainstruck my_delicious_code.bf
+brainstuck my_delicious_code.bf
 ```
