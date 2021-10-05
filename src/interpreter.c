@@ -52,6 +52,8 @@ int bf__exec_instruction(char instruction_i){
             default:
                 return 0;
     }
+    
+    return 0;
 }
 
 void bf__conditional_loop(int expr_tape_position, int jump){
